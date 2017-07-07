@@ -17,14 +17,21 @@ server.listen(3978, '::', () => {
 })
 
 // Dialog handling
-bot.dialog('/', [
-    function (session) {
-        session.beginDialog('/askName');
-    },
-    function (session, results) {
-        session.send('Hello %s', results.response);
-    }
-]);
+let address;
+function sendProactiveMessage(address) {
+    var msg = new builder.Message().address(address);
+    msg.text("Hello, this is a notification");
+    msg.textLocale('en-US');
+    bot.send(msg);
+}
+
+bot.dialog('/', function (session) {
+    address = session.message.address;
+    session.send("Hi");
+    setTimeout(() => {
+        sendProactiveMessage(address);
+    }, 5000);
+});
 
 bot.dialog('/askName', [
     function (session) {
