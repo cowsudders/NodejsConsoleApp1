@@ -13,6 +13,7 @@ server.post('/api/messages', connector.listen());
 server.listen(3978, '::', () => {
     console.log('server up');
     console.log('This is it');
+
 })
 
 // Dialog handling
